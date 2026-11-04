@@ -1,0 +1,52 @@
+name: Corriger le nom de l'archive MediaClean
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/fix-release-asset-name.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  rename:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      GH_TOKEN: ${{ github.token }}
+      TAG: v1.15.0-pre-rc1.15.10
+      EXPECTED_SHA256: '92192c435369a2f8fd8eaa0e9eb66e752fe29b7eeffb912494bd4431215b4541'
+      WRONG_NAME: MediaClean-PRE-RC1.15.10-win-x64.1.zip
+      CORRECT_NAME: MediaClean-PRE-RC1.15.10-win-x64.zip
+    steps:
+      - name: Contrôler l'archive et son empreinte
+        shell: bash
+        run: |
+          set -euo pipefail
+          release_id="$(gh api "repos/$GITHUB_REPOSITORY/releases/tags/$TAG" --jq '.id')"
+          gh api "repos/$GITHUB_REPOSITORY/releases/$release_id/assets" > assets.json
+          current="$(jq -r --arg n "$WRONG_NAME" '.[] | select(.name==$n) | .id' assets.json)"
+          existing="$(jq -r --arg n "$CORRECT_NAME" '.[] | select(.name==$n) | .id' assets.json)"
+          if [[ -n "$existing" ]]; then
+            echo "Archive déjà renommée : $CORRECT_NAME"
+            exit 0
+          fi
+          if [[ -z "$current" ]]; then
+            echo "::error::Archive introuvable : $WRONG_NAME"
+            exit 1
+          fi
+          actual="$(jq -r --arg n "$WRONG_NAME" '.[] | select(.name==$n) | .digest' assets.json)"
+          if [[ "$actual" != "sha256:$EXPECTED_SHA256" ]]; then
+            echo "::error::Empreinte du binaire inattendue. Opération annulée."
+            exit 1
+          fi
+          gh release download "$TAG" --pattern "$CORRECT_NAME.sha256" --dir .
+          checksum="$(awk '{print $1}' "$CORRECT_NAME.sha256")"
+          if [[ "$checksum" != "$EXPECTED_SHA256" ]]; then
+            echo "::error::Le fichier SHA-256 ne correspond pas au ZIP. Opération annulée."
+            exit 1
+          fi
+          gh api --method PATCH "repos/$GITHUB_REPOSITORY/releases/assets/$current" -f name="$CORRECT_NAME" --jq '{id,name,digest}'
+          echo "Nom corrigé ; empreintes concordantes."
