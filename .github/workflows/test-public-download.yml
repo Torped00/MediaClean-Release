@@ -1,0 +1,82 @@
+name: MediaClean - Test du téléchargement public Windows
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/test-public-download.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  public-release-smoke-test:
+    name: Télécharger et tester la Release Windows publique
+    runs-on: windows-latest
+    timeout-minutes: 30
+    env:
+      GH_TOKEN: ${{ github.token }}
+      TAG: v1.15.0-pre-rc1.15.10
+      ZIP_NAME: MediaClean-PRE-RC1.15.10-win-x64.zip
+      EXPECTED_SHA256: '92192c435369a2f8fd8eaa0e9eb66e752fe29b7eeffb912494bd4431215b4541'
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Télécharger le ZIP public et son SHA-256 depuis GitHub Releases
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          New-Item -ItemType Directory -Path 'release-download' -Force | Out-Null
+          gh release download $env:TAG --repo $env:GITHUB_REPOSITORY --pattern $env:ZIP_NAME --dir release-download
+          if ($LASTEXITCODE -ne 0) { throw 'Impossible de télécharger le ZIP public.' }
+          gh release download $env:TAG --repo $env:GITHUB_REPOSITORY --pattern "$env:ZIP_NAME.sha256" --dir release-download
+          if ($LASTEXITCODE -ne 0) { throw 'Impossible de télécharger le fichier SHA-256 public.' }
+          if (-not (Test-Path -LiteralPath "release-download/$env:ZIP_NAME")) { throw 'ZIP manquant.' }
+          if (-not (Test-Path -LiteralPath "release-download/$env:ZIP_NAME.sha256")) { throw 'Empreinte publiée manquante.' }
+
+      - name: Vérifier les deux empreintes SHA-256
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $actual = (Get-FileHash -LiteralPath "release-download/$env:ZIP_NAME" -Algorithm SHA256).Hash.ToLowerInvariant()
+          $text = Get-Content -LiteralPath "release-download/$env:ZIP_NAME.sha256" -Raw
+          if ($text -notmatch '^([A-Fa-f0-9]{64})\s+') { throw 'Fichier SHA-256 malformé.' }
+          $published = $Matches[1].ToLowerInvariant()
+          if ($actual -ne $published -or $actual -ne $env:EXPECTED_SHA256) {
+            throw "Empreinte inattendue : réel=$actual ; annoncé=$published"
+          }
+          Write-Host 'Empreinte SHA-256 confirmée pour le téléchargement public.'
+
+      - name: Vérifier l'archive et la présence du logiciel
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          Expand-Archive -LiteralPath "release-download/$env:ZIP_NAME" -DestinationPath 'release-extracted' -Force
+          $files = Get-ChildItem -LiteralPath 'release-extracted' -Recurse -File
+          Write-Host "Fichiers présents dans l'archive : $($files.Count)"
+          $exe = $files | Where-Object { $_.Name -eq 'MediaClean.exe' } | Select-Object -First 1
+          if ($null -eq $exe -or $exe.Length -lt 1000000) { throw 'MediaClean.exe absent ou anormalement petit.' }
+          $script:exePath = $exe.FullName
+          Write-Host "Exécutable MediaClean présent ($([math]::Round($exe.Length / 1MB, 1)) Mio)."
+
+      - name: Exécuter les auto-tests du véritable ZIP public
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $exe = Get-ChildItem -LiteralPath 'release-extracted' -Recurse -Filter 'MediaClean.exe' -File | Select-Object -First 1
+          if ($null -eq $exe) { throw 'MediaClean.exe introuvable.' }
+          $desktop = [Environment]::GetFolderPath('DesktopDirectory')
+          if ([string]::IsNullOrWhiteSpace($desktop)) { throw 'Bureau Windows introuvable.' }
+          New-Item -ItemType Directory -Force -Path $desktop | Out-Null
+          $report = Join-Path $desktop 'MediaClean-selftest-result.json'
+          Remove-Item -LiteralPath $report -ErrorAction SilentlyContinue
+          $process = Start-Process -FilePath $exe.FullName -ArgumentList @('--self-test', '--no-ui') -Wait -PassThru
+          if (-not (Test-Path -LiteralPath $report)) {
+            throw "Rapport des auto-tests manquant (sortie=$($process.ExitCode))."
+          }
+          $result = Get-Content -Raw -LiteralPath $report | ConvertFrom-Json
+          Write-Host "Auto-tests du ZIP public : $($result.passed) réussis, $($result.failed) échecs."
+          if ($process.ExitCode -ne 0 -or $result.success -ne $true -or $result.failed -ne 0 -or $result.passed -le 0) {
+            throw 'Les auto-tests de la version publique ont échoué.'
+          }
