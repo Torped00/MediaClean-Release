@@ -1,0 +1,43 @@
+MediaClean - Mentions tierces
+Version 1.15.0
+
+1. TMDB / The Movie Database
+MediaClean utilise l’API TMDB pour l’identification et les métadonnées de films.
+
+MediaClean utilise l’API TMDB mais n’est ni approuvé ni certifié par TMDB.
+This product uses the TMDB API but is not endorsed or certified by TMDB.
+
+Site : https://www.themoviedb.org
+Documentation / attribution : https://developer.themoviedb.org/docs/faq
+Logos officiels : https://www.themoviedb.org/about/logos-attribution
+
+Le logo TMDB d’attribution affiché dans « À propos » est embarqué dans l’exécutable afin de ne pas déclencher de requête réseau à l’ouverture de la fenêtre. Il reprend le logo carré officiel TMDB (auteur : Travis Bell), sans modification des couleurs ni des proportions. Source d’origine indiquée par Wikimedia Commons :
+https://www.themoviedb.org/assets/2/v4/logos/v2/blue_square_2-d537fb228cf3ded904ef09b136fe3fec72548ebc1fea3fbbd1ad9e36364db38b.svg
+Miroir / informations de licence : https://commons.wikimedia.org/wiki/File:Tmdb.new.logo.svg
+Licence indiquée pour ce fichier : CC BY-SA 4.0.
+
+2. TVmaze
+MediaClean utilise l’API TVmaze pour l’identification des séries et épisodes.
+Les données de l’API publique TVmaze sont utilisées avec attribution conformément à la licence CC BY-SA indiquée par TVmaze.
+
+Site : https://www.tvmaze.com
+API / licence : https://www.tvmaze.com/api
+
+3. Microsoft .NET
+MediaClean est construit avec Microsoft .NET 10 et la version Windows peut être publiée en mode self-contained, ce qui embarque des composants du runtime .NET.
+
+Les distributions .NET Windows comprennent des composants soumis notamment à la .NET Library License, à la licence MIT et à des licences tierces. Lors de la publication, MediaClean tente de recopier sans modification les notices présentes dans l’installation du SDK sous les noms :
+- DOTNET-LICENSE.txt
+- DOTNET-THIRD-PARTY-NOTICES.txt
+
+Informations officielles :
+https://github.com/dotnet/core/blob/main/license-information.md
+https://github.com/dotnet/core/blob/main/license-information-windows.md
+https://github.com/dotnet/runtime/blob/main/docs/project/licensing-assets.md
+
+4. MyMemory / Translated
+La traduction facultative des résumés utilise le service MyMemory uniquement lorsqu’elle est demandée par l’utilisateur. MediaClean transmet alors uniquement le texte public du résumé à traduire ; aucun fichier multimédia, NFO, sous-titre ou chemin local/NAS n’est envoyé par cette fonction.
+
+Service : https://mymemory.translated.net
+
+Ces mentions n’impliquent aucune approbation ou certification de MediaClean par les services cités.
