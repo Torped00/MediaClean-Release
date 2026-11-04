@@ -1,0 +1,34 @@
+name: Initialiser la première Release publique
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/create-first-release.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  release-page:
+    name: Préparer une Release sans code privé
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Créer la page de préversion (sans exécutable)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          TAG="v1.15.0-pre-rc1.15.10"
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            echo "La préversion existe déjà."
+          else
+            gh release create "$TAG" \
+              --target "${GITHUB_SHA}" \
+              --title "MediaClean 1.15.0 - PRE-RC1.15.10 (Windows x64)" \
+              --notes-file RELEASE-NOTES-v1.15.0-pre-rc1.15.10.md \
+              --prerelease --draft
+          fi
+          echo "Release créée en brouillon : l'exécutable doit être ajouté puis vérifié avant publication."
