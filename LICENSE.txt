@@ -1,0 +1,10 @@
+MediaClean - Licence Freeware
+Copyright © Torpedo. Tous droits réservés.
+
+MediaClean est fourni gratuitement pour une utilisation personnelle et non commerciale.
+
+Vous pouvez utiliser gratuitement la version officielle de MediaClean et conserver des copies de sauvegarde. La revente, l’intégration payante, la modification puis redistribution, ou la présentation d’une version modifiée comme version officielle de MediaClean ne sont pas autorisées sans accord préalable de l’auteur.
+
+Cette licence ne modifie pas les droits accordés séparément par les composants, services, données, images ou marques de tiers utilisés par MediaClean. Leurs conditions restent applicables ; voir THIRD-PARTY-NOTICES.txt.
+
+LE LOGICIEL EST FOURNI « EN L’ÉTAT », SANS GARANTIE EXPRESSE OU IMPLICITE. DANS LES LIMITES AUTORISÉES PAR LA LOI, L’AUTEUR NE PEUT ÊTRE TENU RESPONSABLE D’UNE PERTE DE DONNÉES OU D’UN DOMMAGE LIÉ À SON UTILISATION.
