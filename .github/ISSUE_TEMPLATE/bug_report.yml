@@ -1,0 +1,44 @@
+name: Bug report / Signaler un bug
+description: Report a problem with MediaClean / Signaler un problème
+title: "[Bug] "
+labels: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Merci de votre aide ! / Thanks for helping!
+        Please **do not share private file paths, API keys, credentials or personal data**.
+        Merci de **ne pas publier de chemins privés, jetons API ou données personnelles**.
+  - type: input
+    id: version
+    attributes:
+      label: Version de MediaClean / MediaClean version
+      placeholder: PRE-RC1.15.10
+    validations:
+      required: true
+  - type: input
+    id: windows
+    attributes:
+      label: Version Windows / Windows version
+      placeholder: Windows 11 x64
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Étapes pour reproduire / Steps to reproduce
+      description: Use sample filenames if possible / Utilisez des exemples de noms fictifs
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Résultat attendu / Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Résultat constaté / Actual behavior
+    validations:
+      required: true
