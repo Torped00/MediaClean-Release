@@ -21,6 +21,7 @@ jobs:
       WRONG_NAME: MediaClean-PRE-RC1.15.10-win-x64.1.zip
       CORRECT_NAME: MediaClean-PRE-RC1.15.10-win-x64.zip
     steps:
+      - uses: actions/checkout@v4
       - name: Contrôler l'archive et son empreinte
         shell: bash
         run: |
