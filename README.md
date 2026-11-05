@@ -11,7 +11,25 @@ MediaClean is a free Windows program to identify, rename and organize movie and 
 > **PRE-RC1.15.11** is a test pre-release. The Windows build passed **437 automated regression tests**, but manual tests on real media libraries are still needed. Always test with copies first.
 
 <!-- MEDIACLEAN_GALLERY_START -->
-**Captures d'écran / Screenshots** — Galerie en préparation : les trois captures réelles apparaîtront ici après leur import dans `screenshots/`.
+### MediaClean en images / Screenshots
+
+**1. Analyse locale / Local scan** — Détection des noms de fichiers et propositions de renommage.
+
+![Interface MediaClean : analyse locale, noms actuels et proposés](screenshots/01-analyse-locale.webp)
+
+**2. Identification TMDB / Online matching** — Films identifiés et cas incertains à vérifier.
+
+![Interface MediaClean : identification TMDB et fichiers à contrôler](screenshots/02-identification-tmdb.webp)
+
+<details>
+<summary>3. Validation manuelle / Manual TMDB selection — Voir la capture / View screenshot</summary>
+
+Recherche TMDB avec propositions et fiche du film sélectionné.
+
+![MediaClean : fenêtre de validation manuelle TMDB](screenshots/03-validation-manuelle.webp)
+</details>
+
+*Captures authentiques de MediaClean 1.15.0. Chemins réseau anonymisés sur les vues principales. Les noms proposés sont des aperçus avant application. / Genuine MediaClean 1.15.0 screenshots with private network paths hidden. Proposed names are previews.*
 <!-- MEDIACLEAN_GALLERY_END -->
 
 ## English
