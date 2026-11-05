@@ -10,6 +10,10 @@ MediaClean is a free Windows program to identify, rename and organize movie and 
 
 > **PRE-RC1.15.11** is a test pre-release. The Windows build passed **437 automated regression tests**, but manual tests on real media libraries are still needed. Always test with copies first.
 
+<!-- MEDIACLEAN_GALLERY_START -->
+**Captures d'écran / Screenshots** — Galerie en préparation : les trois captures réelles apparaîtront ici après leur import dans `screenshots/`.
+<!-- MEDIACLEAN_GALLERY_END -->
+
 ## English
 
 ### What can it do?
