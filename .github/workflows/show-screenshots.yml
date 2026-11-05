@@ -1,0 +1,81 @@
+name: Ajouter les captures au README après leur import
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'screenshots/*.webp'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  gallery:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Mettre à jour le README seulement si les 3 images sont présentes
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          paths = [
+              'screenshots/01-analyse-locale.webp',
+              'screenshots/02-identification-tmdb.webp',
+              'screenshots/03-validation-manuelle.webp',
+          ]
+          if not all(Path(p).is_file() for p in paths):
+              print('Galerie non activée : les trois captures ne sont pas encore présentes.')
+              raise SystemExit(0)
+          readme = Path('README.md')
+          original = readme.read_text(encoding='utf-8')
+          start = '<!-- MEDIACLEAN_GALLERY_START -->'
+          end = '<!-- MEDIACLEAN_GALLERY_END -->'
+          if start not in original or end not in original:
+              print('Marqueurs de galerie introuvables ; rien à modifier.')
+              raise SystemExit(0)
+          gallery = '''<!-- MEDIACLEAN_GALLERY_START -->
+          ### MediaClean en images / Screenshots
+
+          **1. Analyse locale / Local scan** — Détection des noms de fichiers et propositions de renommage.
+
+          ![Interface MediaClean : analyse locale, noms actuels et proposés](screenshots/01-analyse-locale.webp)
+
+          **2. Identification TMDB / Online matching** — Films identifiés et cas incertains à vérifier.
+
+          ![Interface MediaClean : identification TMDB et fichiers à contrôler](screenshots/02-identification-tmdb.webp)
+
+          <details>
+          <summary>3. Validation manuelle / Manual TMDB selection — Voir la capture / View screenshot</summary>
+
+          Recherche TMDB avec propositions et fiche du film sélectionné.
+
+          ![MediaClean : fenêtre de validation manuelle TMDB](screenshots/03-validation-manuelle.webp)
+          </details>
+
+          *Captures authentiques de MediaClean 1.15.0. Chemins réseau anonymisés sur les vues principales. Les noms proposés sont des aperçus avant application. / Genuine MediaClean 1.15.0 screenshots with private network paths hidden. Proposed names are previews.*
+          <!-- MEDIACLEAN_GALLERY_END -->'''
+          left = original.index(start)
+          right = original.index(end, left) + len(end)
+          updated = original[:left] + gallery + original[right:]
+          if updated != original:
+              readme.write_text(updated, encoding='utf-8')
+              print('Galerie intégrée au README.')
+          else:
+              print('Galerie déjà à jour.')
+          PY
+
+      - name: Publier uniquement le README actualisé
+        shell: bash
+        run: |
+          set -euo pipefail
+          if git diff --quiet -- README.md; then
+            echo "Aucune modification."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add README.md
+          git commit -m "docs: afficher les captures d'écran réelles de MediaClean"
+          git push
