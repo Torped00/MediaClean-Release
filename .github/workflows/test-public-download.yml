@@ -17,9 +17,9 @@ jobs:
     timeout-minutes: 30
     env:
       GH_TOKEN: ${{ github.token }}
-      TAG: v1.15.0-pre-rc1.15.10
-      ZIP_NAME: MediaClean-PRE-RC1.15.10-win-x64.zip
-      EXPECTED_SHA256: '92192c435369a2f8fd8eaa0e9eb66e752fe29b7eeffb912494bd4431215b4541'
+      TAG: v1.15.0-pre-rc1.15.12
+      ZIP_NAME: MediaClean-PRE-RC1.15.12-win-x64.zip
+      EXPECTED_SHA256: '8034bd89dfee35053ea40c583668ce04701762ae3874086bf36d3f740c45d843'
     steps:
       - uses: actions/checkout@v4
 
