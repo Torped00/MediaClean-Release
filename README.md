@@ -4,11 +4,11 @@
 
 MediaClean is a free Windows program to identify, rename and organize movie and TV series collections, including libraries on external drives and NAS.
 
-**Windows x64 · Freeware · French interface · No subscription**
+**Windows x64 · Freeware · French / English interface · No subscription**
 
-**[Download / Télécharger PRE-RC1.15.11](https://github.com/Torped00/MediaClean-Release/releases/tag/v1.15.0-pre-rc1.15.11)** · **[Report a bug / Signaler un bug](https://github.com/Torped00/MediaClean-Release/issues)**
+**[Download / Télécharger PRE-RC1.15.12](https://github.com/Torped00/MediaClean-Release/releases/tag/v1.15.0-pre-rc1.15.12)** · **[Report a bug / Signaler un bug](https://github.com/Torped00/MediaClean-Release/issues)**
 
-> **PRE-RC1.15.11** is a test pre-release. The Windows build passed **437 automated regression tests**, but manual tests on real media libraries are still needed. Always test with copies first.
+> **PRE-RC1.15.12** is a test pre-release. The Windows build passed **431 automated regression tests**, but manual tests on real media libraries are still needed. Always test with copies first.
 
 <!-- MEDIACLEAN_GALLERY_START -->
 ### MediaClean en images / Screenshots
@@ -51,26 +51,29 @@ After:  How I Met Your Mother - S04E12.avi
 
 It is **not a Kodi, Plex or Jellyfin plugin**, but correctly named files can help media-center library scanning.
 
-### What's new in PRE-RC1.15.11
+### What's new in PRE-RC1.15.12
 
+- Switch the interface between **French and English**; the selected language is remembered after restart.
+- UI text is translated without changing filenames, paths, custom genres or internal matching/sorting values.
+- Cleaner Windows distribution with no nested ZIP, plus build information and a SHA-256 checksum.
 - Better video quality recognition (including `4KLight`, `BD1080p` and `HD1080P`) and targeted resolution checks when required for sorting.
 - More cautious TMDB automatic matches, especially when a significant number is missing from a proposed movie title.
 - Better recovery of existing movie years and TMDB genres, while keeping manual choices.
 - Safe partial processing, multiple editions, destination protection and Undo are preserved.
 
-See the [full release notes](https://github.com/Torped00/MediaClean-Release/releases/tag/v1.15.0-pre-rc1.15.11).
+See the [full release notes](https://github.com/Torped00/MediaClean-Release/releases/tag/v1.15.0-pre-rc1.15.12).
 
 ### Download and safety
 
-Visit **[PRE-RC1.15.11 Releases](https://github.com/Torped00/MediaClean-Release/releases/tag/v1.15.0-pre-rc1.15.11)**, download `MediaClean-PRE-RC1.15.11-win-x64.zip`, fully extract it, then run `MediaClean.exe`. The build includes the .NET runtime.
+Visit **[PRE-RC1.15.12 Releases](https://github.com/Torped00/MediaClean-Release/releases/tag/v1.15.0-pre-rc1.15.12)**, download `MediaClean-PRE-RC1.15.12-win-x64.zip`, fully extract it, then run `MediaClean.exe`. The build includes the .NET runtime.
 
 **SmartScreen / “Unknown publisher”:** this free personal project is **not digitally signed**, so Windows may show a warning. A warning alone does not prove a program is harmful or safe. Verify the download source and compare its SHA-256 hash with the checksum supplied alongside the ZIP. Do not disable your antivirus or SmartScreen.
 
 ```powershell
-Get-FileHash .\MediaClean-PRE-RC1.15.11-win-x64.zip -Algorithm SHA256
+Get-FileHash .\MediaClean-PRE-RC1.15.12-win-x64.zip -Algorithm SHA256
 ```
 
-**French interface only for now.** English localization may be added later.
+**French and English interface.** Switch languages from the Language menu; your choice is remembered when MediaClean restarts.
 
 **Freeware for personal, non-commercial use**, not open source. There is no subscription or paid feature. The program contains an **optional donation link** for anyone wishing to buy its creator a coffee or a beer. See [LICENSE.txt](LICENSE.txt) and [THIRD-PARTY-NOTICES.txt](THIRD-PARTY-NOTICES.txt).
 
@@ -102,30 +105,33 @@ Après : How I Met Your Mother - S04E12.avi
 
 MediaClean **n'est pas une extension Kodi, Plex ou Jellyfin** ; il prépare les noms et dossiers pour faciliter la reconnaissance de la vidéothèque.
 
-### Nouveautés de la PRE-RC1.15.11
+### Nouveautés de la PRE-RC1.15.12
 
+- Interface au choix **français / anglais**, avec mémorisation de la langue après redémarrage.
+- La traduction ne modifie ni les noms de fichiers, ni les chemins, ni les genres personnalisés, ni les valeurs internes de reconnaissance et de tri.
+- Archive Windows propre, sans ZIP imbriqué, avec informations de compilation et empreinte SHA-256.
 - Meilleure reconnaissance des qualités (`4KLight`, `BD1080p`, `HD1080P`...) et contrôle ciblé de la résolution réelle si le classement l'exige.
 - Identification automatique TMDB plus prudente, notamment lorsqu'un numéro important disparaît du titre proposé.
 - Meilleure récupération des années et des genres TMDB connus, sans remplacer les choix manuels.
 - Traitement partiel, versions multiples, protection des destinations et Undo conservés.
 
-Toutes les informations figurent dans les [notes de version complètes](https://github.com/Torped00/MediaClean-Release/releases/tag/v1.15.0-pre-rc1.15.11).
+Toutes les informations figurent dans les [notes de version complètes](https://github.com/Torped00/MediaClean-Release/releases/tag/v1.15.0-pre-rc1.15.12).
 
 ### Téléchargement
 
-Ouvre la **[Release PRE-RC1.15.11](https://github.com/Torped00/MediaClean-Release/releases/tag/v1.15.0-pre-rc1.15.11)**, télécharge `MediaClean-PRE-RC1.15.11-win-x64.zip`, décompresse-le entièrement, puis lance `MediaClean.exe`. Aucun runtime .NET supplémentaire n'est normalement nécessaire.
+Ouvre la **[Release PRE-RC1.15.12](https://github.com/Torped00/MediaClean-Release/releases/tag/v1.15.0-pre-rc1.15.12)**, télécharge `MediaClean-PRE-RC1.15.12-win-x64.zip`, décompresse-le entièrement, puis lance `MediaClean.exe`. Aucun runtime .NET supplémentaire n'est normalement nécessaire.
 
-La préversion **PRE-RC1.15.11** a réussi **437 auto-tests de régression**, mais nécessite encore des essais manuels. **Teste d'abord sur des copies de fichiers**, jamais directement sur ton unique vidéothèque.
+La préversion **PRE-RC1.15.12** a réussi **431 auto-tests de régression**, mais nécessite encore des essais manuels. **Teste d'abord sur des copies de fichiers**, jamais directement sur ton unique vidéothèque.
 
 **SmartScreen / « Éditeur inconnu » :** le programme **n'est pas signé numériquement**, car c'est un projet personnel gratuit. Windows peut afficher un avertissement ; ce n'est ni la preuve d'un danger, ni une preuve de sûreté. Vérifie l'origine du fichier, compare l'empreinte SHA-256 avec celle publiée pour la même Release et conserve tes protections Windows activées.
 
 Pour vérifier le ZIP dans PowerShell :
 
 ```powershell
-Get-FileHash .\MediaClean-PRE-RC1.15.11-win-x64.zip -Algorithm SHA256
+Get-FileHash .\MediaClean-PRE-RC1.15.12-win-x64.zip -Algorithm SHA256
 ```
 
-**Interface en français uniquement** pour le moment ; une traduction anglaise est envisagée.
+**Interface bilingue français / anglais** : sélectionne la langue dans le menu « Langue » ; le choix est mémorisé au prochain lancement.
 
 ### Un logiciel gratuit, pour le plaisir
 
